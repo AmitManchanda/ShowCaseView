@@ -12,9 +12,9 @@ namespace ShowCaseView.Controls
 
 		protected IOverlayService OverlayService { get; }
 
-		public virtual void Show()
+		public virtual void Show(View onView)
 		{
-			OverlayService.AddOverlay(this);
+			OverlayService.AddOverlay(this, onView);
 		}
 
 		public virtual void Hide()

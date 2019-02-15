@@ -8,7 +8,7 @@ namespace ShowCaseView.iOS.Services
 {
 	public class OverlayService : IOverlayService
 	{
-		public void AddOverlay(Overlay view)
+		public void AddOverlay(Overlay view, View onView)
 		{
 		}
 
