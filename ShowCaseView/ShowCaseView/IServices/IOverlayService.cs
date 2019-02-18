@@ -1,10 +1,10 @@
-﻿using ShowCaseView.Controls;
+﻿using ShowCaseView.Model;
 using Xamarin.Forms;
 
 namespace ShowCaseView.IServices
 {
 	public interface IOverlayService
     {
-		void AddOverlay(Overlay view, View onView);
+		void AddOverlay(View onView, ShowCaseConfig config);
 	}
 }

@@ -1,94 +1,18 @@
-﻿using Android.App;
-using Android.OS;
-using Android.Util;
-using Android.Views;
+﻿using Android.Views;
 
 namespace ShowcaseView.Utilities
-{ 
-    public class Calculator
+{
+	public class Calculator
     {
         #region Class Variables
 
         private double mBitmapWidth, mBitmapHeight;
-        private double mFocusWidth, mFocusHeight, mCircleCenterX, mCircleCenterY, mCircleRadius;
+        private double mFocusWidth, mFocusHeight, mCircleCenterX, mCircleCenterY;
         private bool mHasFocus;
-        private Activity mActivity;
-        private View mView;
-        private double mFocusCircleRadiusFactor;
-        private bool mFitSystemWindows;
 
-        /**
-         * @return Focus width
-         */
-        public double FocusWidth
-        {
-            get { return mFocusWidth; }
-        }
+		#endregion
 
-        /**
-         * @return Focus height
-         */
-        public double FocusHeight
-        {
-            get { return mFocusHeight; }
-        }
-
-        /**
-         * @return X coordinate of focus circle
-         */
-        public double CircleCenterX
-        {
-            get { return mCircleCenterX; }
-        }
-
-        /**
-         * @return Y coordinate of focus circle
-         */
-        public double CircleCenterY
-        {
-            get { return mCircleCenterY; }
-        }
-
-        /**
-         * @return Radius of focus circle
-         */
-        public double ViewRadius
-        {
-            get { return mCircleRadius; }
-        }
-
-        /**
-         * @return True if there is a view to focus
-         */
-        public bool HasFocus
-        {
-            get { return mHasFocus; }
-        }
-
-        /**
-         * @return Width of background bitmap
-         */
-        public double BitmapWidth
-        {
-            get { return mBitmapWidth; }
-        }
-
-        /**
-         * @return Height of background bitmap
-         */
-        public double BitmapHeight
-        {
-            get { return mBitmapHeight; }
-        }
-
-        #endregion
-        
-        public void SetmCircleRadius(int mCircleRadius)
-        {
-            this.mCircleRadius = mCircleRadius;
-        }
-
-        public Calculator(View view, double radiusFactor)
+		public Calculator(View view, double radiusFactor)
         {
             double deviceWidth = Xamarin.Forms.Application.Current.MainPage.Bounds.Width;
             double deviceHeight = Xamarin.Forms.Application.Current.MainPage.Bounds.Height;
@@ -103,7 +27,6 @@ namespace ShowcaseView.Utilities
                 mFocusHeight = view.Height;
                 mCircleCenterX = viewPoint[0] + mFocusWidth / 2;
                 mCircleCenterY = viewPoint[1] + mFocusHeight / 2 - adjustHeight;
-                mCircleRadius = (int)((int)(Java.Lang.Math.Hypot(view.Width, view.Height) / 2) * radiusFactor);
                 mHasFocus = true;
             }
             else
@@ -119,25 +42,6 @@ namespace ShowcaseView.Utilities
             mFocusWidth = rectWidth;
             mFocusHeight = rectHeight;
             mHasFocus = true;
-        }
-
-        public void SetCirclePosition(int positionX, int positionY, int radius)
-        {
-            mCircleCenterX = positionX;
-            mCircleRadius = radius;
-            mCircleCenterY = positionY;
-            mHasFocus = true;
-        }
-
-        /// <summary>
-        /// Return Radius of animating circle, given the paramaters
-        /// </summary>
-        /// <param name="animCounter"></param>
-        /// <param name="animMoveFactor"></param>
-        /// <returns></returns>
-        public float CircleRadius(int animCounter, double animMoveFactor)
-        {
-            return (float)(mCircleRadius + animCounter * animMoveFactor);
         }
 
         /// <summary>
@@ -182,17 +86,6 @@ namespace ShowcaseView.Utilities
         public float RoundRectBottom(int animCounter, double animMoveFactor)
         {
             return (float)(mCircleCenterY + mFocusHeight / 2 + animCounter * animMoveFactor);
-        }
-
-        /// <summary>
-        /// Return Radius of focus round rect
-        /// </summary>
-        /// <param name="animCounter"></param>
-        /// <param name="animMoveFactor"></param>
-        /// <returns></returns>
-        public float RoundRectLeftCircleRadius(int animCounter, double animMoveFactor)
-        {
-            return (float)(mFocusHeight / 2 + animCounter * animMoveFactor);
         }
     }
 }

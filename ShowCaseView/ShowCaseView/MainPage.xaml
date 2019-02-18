@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:ShowCaseView"
              x:Class="ShowCaseView.MainPage">
     <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+		<Label Text="I am behind the Scene Label" 
+			   TextColor="Black" 
+			   BackgroundColor="White" 
+			   HorizontalOptions="CenterAndExpand"
+			   Margin="0,25,0,0"></Label>
 		<Button BackgroundColor="Blue" 
 				x:Name="ShowMeButton" 
 				TextColor="White" 

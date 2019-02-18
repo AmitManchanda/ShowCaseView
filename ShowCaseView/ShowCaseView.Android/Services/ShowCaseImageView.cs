@@ -12,13 +12,11 @@ namespace ShowCaseView.Droid.Services
         #region CLASS LEVEL VARIABLES
 
         private Bitmap mBitmap;
-        private Paint mBackgroundPaint, mErasePaint, mCircleBorderPaint;
+        private Paint mBackgroundPaint, mErasePaint;
         private Color mBackgroundColor = Color.Transparent;
         private Color mFocusBorderColor = Color.Transparent;
-        private int mFocusBorderSize = 0;
         private int mRoundRectRadius = 10;
         private Calculator mCalculator;
-        private Path mPath;
         private RectF rectF;
 
         #endregion
@@ -54,13 +52,6 @@ namespace ShowCaseView.Droid.Services
             mErasePaint.SetXfermode(new PorterDuffXfermode(PorterDuff.Mode.Clear));
             mErasePaint.Alpha = 0xFF;
             mErasePaint.AntiAlias = true;
-
-            mPath = new Path();
-            mCircleBorderPaint = new Paint();
-            mCircleBorderPaint.AntiAlias = true;
-            mCircleBorderPaint.Color = mFocusBorderColor;
-            mCircleBorderPaint.StrokeWidth = mFocusBorderSize;
-            mCircleBorderPaint.SetStyle(Paint.Style.Stroke);
 
             rectF = new RectF();
         }

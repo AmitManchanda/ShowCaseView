@@ -19,7 +19,7 @@ namespace ShowCaseView
 		private void ShowMeButton_Clicked(object sender, EventArgs e)
 		{
 			Overlay overlay = new Overlay();
-			overlay.Show(ShowMeButton);
+			overlay.Show(ShowMeButton, null);
 		}
 	}
 }

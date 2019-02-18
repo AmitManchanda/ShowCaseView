@@ -2,9 +2,9 @@
 using Android.Views;
 using Android.Widget;
 using ShowcaseView.Utilities;
-using ShowCaseView.Controls;
 using ShowCaseView.Droid.Services;
 using ShowCaseView.IServices;
+using ShowCaseView.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -19,7 +19,7 @@ namespace ShowCaseView.Droid.Services
 		{
 		}
 
-		public void AddOverlay(Overlay view, Xamarin.Forms.View onView)
+		public void AddOverlay(Xamarin.Forms.View onView, ShowCaseConfig config)
 		{
 			var focusedView = Focus(onView);
 			_decoreView.AddView(focusedView);
@@ -38,11 +38,12 @@ namespace ShowCaseView.Droid.Services
 
 		private ShowCaseImageView Focus(Xamarin.Forms.View onView)
 		{
+			Android.Graphics.Color color = Android.Graphics.Color.Black;
+			color.A = 70;
 			var mView = GetOrCreateRenderer(onView).View;
 			var mCalculator = new Calculator(mView, 0);
-			var context = Android.App.Application.Context;
-			ShowCaseImageView imageView = new ShowCaseImageView(context);
-			imageView.SetParameters(Android.Graphics.Color.Black, mCalculator);
+			ShowCaseImageView imageView = new ShowCaseImageView(MainApplication.ActivityContext);
+			imageView.SetParameters(color, mCalculator);
 			imageView.LayoutParameters = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
 			return imageView;
 		}
