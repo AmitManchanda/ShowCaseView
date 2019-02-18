@@ -16,10 +16,10 @@ namespace ShowCaseView
 			base.OnAppearing();
 		}
 
-		private void ClickMeButton_Clicked(object sender, EventArgs e)
+		private void ShowMeButton_Clicked(object sender, EventArgs e)
 		{
-			ShowCaseViewControl showCaseView = new ShowCaseViewControl();
-			showCaseView.Show(ClickMeButton);
+			Overlay overlay = new Overlay();
+			overlay.Show(ShowMeButton);
 		}
 	}
 }

@@ -5,10 +5,10 @@
              x:Class="ShowCaseView.MainPage">
     <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 		<Button BackgroundColor="Blue" 
-				x:Name="ClickMeButton" 
+				x:Name="ShowMeButton" 
 				TextColor="White" 
 				Text="Show ME!"
-				Clicked="ClickMeButton_Clicked"
+				Clicked="ShowMeButton_Clicked"
 				HorizontalOptions="Center"
 				VerticalOptions="CenterAndExpand"
 				FontSize="17"></Button>

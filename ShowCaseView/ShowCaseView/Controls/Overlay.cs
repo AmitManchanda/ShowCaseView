@@ -3,16 +3,16 @@ using Xamarin.Forms;
 
 namespace ShowCaseView.Controls
 {
-	public abstract class Overlay : ContentView
+	public class Overlay
     {
 		public Overlay()
 		{
 			OverlayService = DependencyService.Get<IOverlayService>();
 		}
 
-		protected IOverlayService OverlayService { get; }
+		private IOverlayService OverlayService { get; }
 
-		public virtual void Show(View onView)
+		public void Show(View onView)
 		{
 			OverlayService.AddOverlay(this, onView);
 		}
