@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Android.App;
+﻿using Android.App;
+using Android.Views;
 using Android.Widget;
+using ShowcaseView.Utilities;
 using ShowCaseView.Controls;
 using ShowCaseView.Droid.Services;
 using ShowCaseView.IServices;
@@ -15,48 +14,15 @@ namespace ShowCaseView.Droid.Services
 	public class OverlayService : IOverlayService
 	{
 		private FrameLayout _decoreView => (FrameLayout)((Activity)MainApplication.ActivityContext).Window.DecorView;
-		private static List<Overlay> _views = new List<Overlay>();
-		private Rectangle _currentBounds;
 
 		public OverlayService()
 		{
 		}
 
-		private async void _decoreView_LayoutChange(object sender, Android.Views.View.LayoutChangeEventArgs e)
+		public void AddOverlay(Overlay view, Xamarin.Forms.View onView)
 		{
-			var b = Xamarin.Forms.Application.Current.MainPage.Bounds;
-			if (_currentBounds.Width == b.Width && _currentBounds.Height == b.Height)
-				return;
-			_currentBounds = b;
-			await Task.Delay(200);
-
-			_views.ForEach(v => v.Layout(b));
-		}
-
-		public void AddOverlay(Overlay view, View onView)
-		{
-			_decoreView.LayoutChange += _decoreView_LayoutChange;
-			view.Parent = Xamarin.Forms.Application.Current.MainPage;
-			var renderer = GetOrCreateRenderer(view);
-			_currentBounds = Xamarin.Forms.Application.Current.MainPage.Bounds;
-			view.Layout(_currentBounds);
-			_views.Add(view);
-			_decoreView.AddView(renderer.View, 1);
-			_decoreView.BringChildToFront(renderer.View);
-		}
-
-		public void RemoveOverlay(Overlay view)
-		{
-			var renderer = Platform.GetRenderer(view);
-			if (renderer == null || view.Parent == null)
-				return;
-
-			Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
-			{
-				_decoreView.RemoveView(renderer.View);
-				view.Parent = null;
-			});
-			_views.Remove(view);
+			var focusedView = Focus(onView);
+			_decoreView.AddView(focusedView);
 		}
 
 		private static IVisualElementRenderer GetOrCreateRenderer(VisualElement element)
@@ -68,6 +34,17 @@ namespace ShowCaseView.Droid.Services
 				Platform.SetRenderer(element, renderer);
 			}
 			return renderer;
+		}
+
+		private ShowCaseImageView Focus(Xamarin.Forms.View onView)
+		{
+			var mView = GetOrCreateRenderer(onView).View;
+			var mCalculator = new Calculator(mView, 0);
+			var context = Android.App.Application.Context;
+			ShowCaseImageView imageView = new ShowCaseImageView(context);
+			imageView.SetParameters(Android.Graphics.Color.Black, mCalculator);
+			imageView.LayoutParameters = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+			return imageView;
 		}
 	}
 }

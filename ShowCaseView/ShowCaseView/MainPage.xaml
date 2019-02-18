@@ -3,11 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShowCaseView"
              x:Class="ShowCaseView.MainPage">
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label BackgroundColor="White" Text="Welcome to Xamarin.Forms!" 
-			   HorizontalOptions="Center"
-			   x:Name="WelcomeTextLabel"
-			   VerticalOptions="CenterAndExpand" />
+    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+		<Button BackgroundColor="Blue" 
+				x:Name="ClickMeButton" 
+				TextColor="White" 
+				Text="Show ME!"
+				Clicked="ClickMeButton_Clicked"
+				HorizontalOptions="Center"
+				VerticalOptions="CenterAndExpand"
+				FontSize="17"></Button>
     </StackLayout>
 </ContentPage>

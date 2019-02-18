@@ -1,9 +1,5 @@
 ﻿using ShowCaseView.Controls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace ShowCaseView
@@ -18,9 +14,12 @@ namespace ShowCaseView
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
+		}
+
+		private void ClickMeButton_Clicked(object sender, EventArgs e)
+		{
 			ShowCaseViewControl showCaseView = new ShowCaseViewControl();
-			showCaseView.Configure(new ShowCaseConfig() { ViewText = "Hello", TextHorizontalPosition = LayoutOptions.CenterAndExpand, TextVerticalPosition = LayoutOptions.EndAndExpand});
-			showCaseView.Show(WelcomeTextLabel);
+			showCaseView.Show(ClickMeButton);
 		}
 	}
 }

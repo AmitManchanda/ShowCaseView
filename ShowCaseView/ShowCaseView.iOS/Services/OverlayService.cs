@@ -11,9 +11,5 @@ namespace ShowCaseView.iOS.Services
 		public void AddOverlay(Overlay view, View onView)
 		{
 		}
-
-		public void RemoveOverlay(Overlay view)
-		{
-		}
 	}
 }

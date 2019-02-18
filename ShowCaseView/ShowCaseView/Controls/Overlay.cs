@@ -16,10 +16,5 @@ namespace ShowCaseView.Controls
 		{
 			OverlayService.AddOverlay(this, onView);
 		}
-
-		public virtual void Hide()
-		{
-			OverlayService.RemoveOverlay(this);
-		}
 	}
 }
