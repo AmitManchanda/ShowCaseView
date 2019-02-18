@@ -39,12 +39,13 @@ namespace ShowCaseView.Droid.Services
 		private ShowCaseImageView Focus(Xamarin.Forms.View onView)
 		{
 			Android.Graphics.Color color = Android.Graphics.Color.Black;
-			color.A = 70;
+			color.A = 90;
 			var mView = GetOrCreateRenderer(onView).View;
 			var mCalculator = new Calculator(mView, 0);
 			ShowCaseImageView imageView = new ShowCaseImageView(MainApplication.ActivityContext);
 			imageView.SetParameters(color, mCalculator);
 			imageView.LayoutParameters = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+			imageView.SetBorderParameters(Android.Graphics.Color.White, 2);
 			return imageView;
 		}
 	}

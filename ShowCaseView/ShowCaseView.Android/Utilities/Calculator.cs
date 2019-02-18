@@ -44,13 +44,29 @@ namespace ShowcaseView.Utilities
             mHasFocus = true;
         }
 
-        /// <summary>
-        /// Return Bottom position of round rect
-        /// </summary>
-        /// <param name="animCounter"></param>
-        /// <param name="animMoveFactor"></param>
-        /// <returns></returns>
-        public float RoundRectLeft(int animCounter, double animMoveFactor)
+		/**
+		* @return X coordinate of focus circle
+		*/
+		public double CircleCenterX
+		{
+			get { return mCircleCenterX; }
+		}
+
+		/**
+         * @return Y coordinate of focus circle
+         */
+		public double CircleCenterY
+		{
+			get { return mCircleCenterY; }
+		}
+
+		/// <summary>
+		/// Return Bottom position of round rect
+		/// </summary>
+		/// <param name="animCounter"></param>
+		/// <param name="animMoveFactor"></param>
+		/// <returns></returns>
+		public float RoundRectLeft(int animCounter, double animMoveFactor)
         {
             return (float)(mCircleCenterX - mFocusWidth / 2 - animCounter * animMoveFactor);
         }

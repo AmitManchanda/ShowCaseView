@@ -12,18 +12,19 @@ namespace ShowCaseView.Droid.Services
         #region CLASS LEVEL VARIABLES
 
         private Bitmap mBitmap;
-        private Paint mBackgroundPaint, mErasePaint;
+        private Paint mBackgroundPaint, mErasePaint, mCircleBorderPaint;
         private Color mBackgroundColor = Color.Transparent;
         private Color mFocusBorderColor = Color.Transparent;
-        private int mRoundRectRadius = 10;
+        private int mFocusBorderSize;
         private Calculator mCalculator;
         private RectF rectF;
+		private Path mPath;
 
-        #endregion
+		#endregion
 
-        #region CONSTRUCTORS
+		#region CONSTRUCTORS
 
-        public ShowCaseImageView(Context context) : base(context)
+		public ShowCaseImageView(Context context) : base(context)
         {
             Init();
         }
@@ -53,7 +54,14 @@ namespace ShowCaseView.Droid.Services
             mErasePaint.Alpha = 0xFF;
             mErasePaint.AntiAlias = true;
 
-            rectF = new RectF();
+			mPath = new Path();
+			mCircleBorderPaint = new Paint();
+			mCircleBorderPaint.AntiAlias = true;
+			mCircleBorderPaint.Color = mFocusBorderColor;
+			mCircleBorderPaint.StrokeWidth = mFocusBorderSize;
+			mCircleBorderPaint.SetStyle(Paint.Style.Stroke);
+
+			rectF = new RectF();
         }
 
         /// <summary>
@@ -67,11 +75,17 @@ namespace ShowCaseView.Droid.Services
             mCalculator = calculator;
         }
 
-        /// <summary>
-        /// Draws background and moving focus area
-        /// </summary>
-        /// <param name="canvas"></param>
-        public override void Draw(Canvas canvas)
+		public void SetBorderParameters(Color focusBorderColor, int focusBorderSize)
+		{
+			mFocusBorderSize = focusBorderSize;
+			mCircleBorderPaint.Color = focusBorderColor;
+		}
+
+		/// <summary>
+		/// Draws background and moving focus area
+		/// </summary>
+		/// <param name="canvas"></param>
+		public override void Draw(Canvas canvas)
         {
             base.Draw(canvas);
 
@@ -81,21 +95,28 @@ namespace ShowCaseView.Droid.Services
                 mBitmap.EraseColor(mBackgroundColor);
             }
             canvas.DrawBitmap(mBitmap, 0, 0, mBackgroundPaint);
-			DrawRoundedRectangle(canvas);
+			DrawRectangle(canvas);
+			if (mFocusBorderSize > 0)
+			{
+				mPath.Reset();
+				mPath.MoveTo((float)mCalculator.CircleCenterX, (float)mCalculator.CircleCenterY);
+				mPath.AddRect(rectF, Path.Direction.Cw);
+				canvas.DrawPath(mPath, mCircleBorderPaint);
+			}
 		}
 
         /// <summary>
         /// Draws focus rounded rectangle
         /// </summary>
         /// <param name="canvas"></param>
-        private void DrawRoundedRectangle(Canvas canvas)
+        private void DrawRectangle(Canvas canvas)
         {
             float left = mCalculator.RoundRectLeft(0, 1);
             float top = mCalculator.RoundRectTop(0, 1);
             float right = mCalculator.RoundRectRight(0, 1);
             float bottom = mCalculator.RoundRectBottom(0, 1);
             rectF.Set(left, top, right, bottom);
-            canvas.DrawRoundRect(rectF, mRoundRectRadius, mRoundRectRadius, mErasePaint);
+            canvas.DrawRect(rectF, mErasePaint);
         }
     }
 }
