@@ -19,7 +19,12 @@ namespace ShowCaseView
 		private void ShowMeButton_Clicked(object sender, EventArgs e)
 		{
 			Overlay overlay = new Overlay();
-			overlay.Show(ShowMeButton, null);
+			overlay.Show(ShowMeButton, new Model.ShowCaseConfig()
+			{
+				TextHorizontalPosition = Model.HorizontalPosition.Center,
+				TextVerticalPosition = Model.VerticalPosition.Top,
+				ViewText = "This is Show Me Button!"
+			});
 		}
 	}
 }

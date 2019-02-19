@@ -1,5 +1,7 @@
 ﻿using CoreGraphics;
+using ShowCaseView.iOS.Layout;
 using ShowCaseView.iOS.Utilities;
+using ShowCaseView.Model;
 using UIKit;
 
 namespace ShowCaseView.iOS.Services
@@ -11,7 +13,7 @@ namespace ShowCaseView.iOS.Services
 		public const float TargetHolderRadius = 44f;
 		public const float TextCenterOffset = 44f + 20f;
 		public const float InstructionsCenterOffset = 20f;
-		public const float LabelMargin = 40f;
+		public const float LabelMargin = 0f;
 		public const float TargetPadding = 20f;
 
 		// Other default properties
@@ -23,6 +25,7 @@ namespace ShowCaseView.iOS.Services
 		public UIView containerView;
 		public UIView targetView;
 		public UIView targetCopyView;
+		public ShowCaseInstructionView instructionView;
 
 		// MARK: Public Properties
 
@@ -33,6 +36,10 @@ namespace ShowCaseView.iOS.Services
 		public UIColor targetTintColor;
 		public float targetHolderRadius;
 		public UIColor targetHolderColor;
+
+
+		//Config
+		public ShowCaseConfig config;
 
 		public ShowCase() : base(new CGRect(0, 0, UIScreen.MainScreen.Bounds.Width, UIScreen.MainScreen.Bounds.Height))
 		{
@@ -92,14 +99,46 @@ namespace ShowCaseView.iOS.Services
 		{
 			var center = materialShowcase.CalculateCenter(materialShowcase.targetView, materialShowcase.containerView);
 			materialShowcase.AddTarget(center);
+			materialShowcase.AddInstructionView(center);
+			materialShowcase.instructionView.LayoutIfNeeded();
 			foreach (var subView in materialShowcase.Subviews)
 				subView.UserInteractionEnabled = false;
+		}
+
+		public static void AddInstructionView(this ShowCase materialShowcase, CGPoint atCenter)
+		{
+			materialShowcase.instructionView = new ShowCaseInstructionView();
+			materialShowcase.instructionView.text = materialShowcase.config.ViewText;
+
+			// Calculate x position
+			
+			float xPosition = ShowCase.LabelMargin;
+
+			// Calculate y position
+			float yPosition;
+
+			if (materialShowcase.config.TextVerticalPosition != VerticalPosition.Top)
+				yPosition = (float)atCenter.Y + ShowCase.TextCenterOffset;
+			else
+				yPosition = (float)atCenter.Y - ShowCase.TextCenterOffset - ShowCase.LabelDefaultHeight * 2;
+
+			materialShowcase.instructionView.Frame = new CGRect(
+				xPosition,
+				yPosition,
+				materialShowcase.containerView.Frame.Width - (xPosition + xPosition),
+				(materialShowcase.containerView.Frame.Height / 2));
+			materialShowcase.AddSubview(materialShowcase.instructionView);
 		}
 
 		/// Sets a general UIView as target
 		public static void SetTargetView(this ShowCase materialShowcase, UIView view)
 		{
 			materialShowcase.targetView = view;
+		}
+
+		public static void InitConfig(this ShowCase materialShowcase, ShowCaseConfig showCaseConfig)
+		{
+			materialShowcase.config = showCaseConfig;
 		}
 
 		public static void Show(this ShowCase materialShowcase)

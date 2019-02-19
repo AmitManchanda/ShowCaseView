@@ -26,6 +26,7 @@ namespace ShowCaseView.iOS.Services
 		{
 			ShowCase showCase = new ShowCase();
 			showCase.SetTargetView(GetOrCreateRenderer(onView).NativeView);
+			showCase.InitConfig(config);
 			showCase.Show();
 		}
 
