@@ -16,6 +16,7 @@
 				Clicked="ShowMeButton_Clicked"
 				HorizontalOptions="Center"
 				VerticalOptions="CenterAndExpand"
+				Padding="8"
 				FontSize="17"></Button>
     </StackLayout>
 </ContentPage>
