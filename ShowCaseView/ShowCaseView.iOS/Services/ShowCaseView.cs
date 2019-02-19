@@ -22,10 +22,6 @@ namespace ShowCaseView.iOS.Services
 		// MARK: Private view properties
 		public UIView containerView;
 		public UIView targetView;
-		public UIView backgroundView;
-		public UIView targetHolderView;
-		public UIView hiddenTargetHolderView;
-		public UIView targetRippleView;
 		public UIView targetCopyView;
 
 		// MARK: Public Properties
@@ -34,7 +30,6 @@ namespace ShowCaseView.iOS.Services
 		public UIColor backgroundPromptColor;
 		public float backgroundPromptColorAlpha;
 		// Target
-		public bool shouldSetTintColor = true;
 		public UIColor targetTintColor;
 		public float targetHolderRadius;
 		public UIColor targetHolderColor;
