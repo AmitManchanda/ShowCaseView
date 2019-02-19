@@ -82,6 +82,9 @@ namespace ShowCaseView.iOS.Services
 			materialShowcase.targetCopyView.Frame = new CGRect(0, 0, width, height);
 			materialShowcase.targetCopyView.Center = atCenter;
 			materialShowcase.targetCopyView.TranslatesAutoresizingMaskIntoConstraints = true;
+			materialShowcase.targetCopyView.Frame = RectangleFExtensions.Inset(materialShowcase.targetCopyView.Frame, -5f, -5f);
+			materialShowcase.targetCopyView.Layer.BorderColor = UIColor.White.CGColor;
+			materialShowcase.targetCopyView.Layer.BorderWidth = 5f;
 			materialShowcase.AddSubview(materialShowcase.targetCopyView);
 		}
 
