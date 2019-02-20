@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
 using Android.Views;
 using Android.Widget;
 using ShowcaseView.Utilities;
@@ -14,15 +15,41 @@ namespace ShowCaseView.Droid.Services
 	public class OverlayService : IOverlayService
 	{
 		private FrameLayout _decoreView => (FrameLayout)((Activity)MainApplication.ActivityContext).Window.DecorView;
-
+		private ShowCaseConfig _config;
 		public OverlayService()
 		{
 		}
 
 		public void AddOverlay(Xamarin.Forms.View onView, ShowCaseConfig config)
 		{
-			var focusedView = Focus(onView);
-			_decoreView.AddView(focusedView);
+			_config = config;
+			FrameLayout frame = new FrameLayout(MainApplication.ActivityContext);
+			frame.AddView(Focus(onView));
+			var view = ((Activity)MainApplication.ActivityContext).LayoutInflater.Inflate(Resource.Layout.ShowcaseViewTitleLayout, frame);
+			SetTextForView(view);
+			_decoreView.AddView(view);
+		}
+
+		private void SetTextForView(Android.Views.View view)
+		{
+			var textView = view.FindViewById<TextView>(Resource.Id.textView1);
+			textView.SetTextAppearance(Resource.Style.ShowcaseDefaultTitleStyle);
+			SetGravity(textView);
+			textView.Text = _config.ViewText;
+		}
+
+		private void SetGravity(TextView textView)
+		{
+			if (_config.TextVerticalPosition == VerticalPosition.Top)
+			{
+				textView.Gravity = _config.TextHorizontalPosition == HorizontalPosition.Left ? GravityFlags.Top | GravityFlags.Left :
+					_config.TextHorizontalPosition == HorizontalPosition.Right ? GravityFlags.Top | GravityFlags.Right : GravityFlags.Top | GravityFlags.Center;
+			}
+			else
+			{
+				textView.Gravity = _config.TextHorizontalPosition == HorizontalPosition.Left ? GravityFlags.Bottom | GravityFlags.Left :
+					_config.TextHorizontalPosition == HorizontalPosition.Right ? GravityFlags.Bottom | GravityFlags.Right : GravityFlags.Bottom | GravityFlags.Center;
+			}
 		}
 
 		private static IVisualElementRenderer GetOrCreateRenderer(VisualElement element)

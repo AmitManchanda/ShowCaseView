@@ -21,8 +21,8 @@ namespace ShowCaseView
 			Overlay overlay = new Overlay();
 			overlay.Show(ShowMeButton, new Model.ShowCaseConfig()
 			{
-				TextHorizontalPosition = Model.HorizontalPosition.Center,
-				TextVerticalPosition = Model.VerticalPosition.Top,
+				TextHorizontalPosition = Model.HorizontalPosition.Right,
+				TextVerticalPosition = Model.VerticalPosition.Bottom,
 				ViewText = "This is Show Me Button!"
 			});
 		}

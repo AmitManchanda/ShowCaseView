@@ -27,4 +27,10 @@
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
     <item name="colorAccent">#FF4081</item>
   </style>
+
+	<style name="ShowcaseDefaultTitleStyle" parent="@android:style/Widget.TextView">
+		<item name="android:textSize">40sp</item>
+		<item name="android:textColor">#ffffff</item>
+		<item name="android:textStyle">bold</item>
+	</style>
 </resources>
