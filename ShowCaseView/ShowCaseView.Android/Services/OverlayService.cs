@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Android.App;
 using Android.Views;
 using Android.Widget;
@@ -15,19 +15,25 @@ namespace ShowCaseView.Droid.Services
 	public class OverlayService : IOverlayService
 	{
 		private FrameLayout _decoreView => (FrameLayout)((Activity)MainApplication.ActivityContext).Window.DecorView;
+		private static List<Android.Views.View> _views = new List<Android.Views.View>();
 		private ShowCaseConfig _config;
+
 		public OverlayService()
 		{
 		}
 
 		public void AddOverlay(Xamarin.Forms.View onView, ShowCaseConfig config)
 		{
-			_config = config;
-			FrameLayout frame = new FrameLayout(MainApplication.ActivityContext);
-			frame.AddView(Focus(onView));
-			var view = ((Activity)MainApplication.ActivityContext).LayoutInflater.Inflate(Resource.Layout.ShowcaseViewTitleLayout, frame);
-			SetTextForView(view);
-			_decoreView.AddView(view);
+			if (_views.Count == 0)
+			{
+				_config = config;
+				FrameLayout frame = new FrameLayout(MainApplication.ActivityContext);
+				frame.AddView(Focus(onView));
+				var view = ((Activity)MainApplication.ActivityContext).LayoutInflater.Inflate(Resource.Layout.ShowcaseViewTitleLayout, frame);
+				SetTextForView(view);
+				_views.Add(view);
+				_decoreView.AddView(view);
+			}
 		}
 
 		private void SetTextForView(Android.Views.View view)
