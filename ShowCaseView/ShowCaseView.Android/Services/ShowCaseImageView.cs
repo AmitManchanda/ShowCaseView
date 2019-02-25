@@ -111,10 +111,10 @@ namespace ShowCaseView.Droid.Services
         /// <param name="canvas"></param>
         private void DrawRectangle(Canvas canvas)
         {
-            float left = mCalculator.RoundRectLeft(0, 1);
-            float top = mCalculator.RoundRectTop(0, 1);
-            float right = mCalculator.RoundRectRight(0, 1);
-            float bottom = mCalculator.RoundRectBottom(0, 1);
+            float left = mCalculator.RoundRectLeft(1, 10);
+            float top = mCalculator.RoundRectTop(1, 10);
+            float right = mCalculator.RoundRectRight(1, 10);
+            float bottom = mCalculator.RoundRectBottom(1, 10);
             rectF.Set(left, top, right, bottom);
             canvas.DrawRect(rectF, mErasePaint);
         }
