@@ -86,10 +86,10 @@ namespace ShowCaseView.Droid.Services
 
 		private void ImageViewClick(object sender, EventArgs e)
 		{
-			Hide();
+			HideOverlay();
 		}
 
-		public void Hide()
+		public void HideOverlay()
 		{
 			if (_views?.Count > 0)
 			{

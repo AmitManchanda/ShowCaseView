@@ -42,7 +42,7 @@ namespace ShowCaseView.iOS.Services
 			return renderer;
 		}
 
-		public void Hide()
+		public void HideOverlay()
 		{
 			if (_showCase != null)
 				_showCase.Hide();
