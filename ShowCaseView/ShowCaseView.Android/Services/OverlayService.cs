@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Android.App;
 using Android.Views;
 using Android.Widget;
@@ -79,7 +80,22 @@ namespace ShowCaseView.Droid.Services
 			imageView.SetParameters(color, mCalculator);
 			imageView.LayoutParameters = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
 			imageView.SetBorderParameters(Android.Graphics.Color.White, 2);
+			imageView.Click += ImageViewClick; ;
 			return imageView;
+		}
+
+		private void ImageViewClick(object sender, EventArgs e)
+		{
+			Hide();
+		}
+
+		public void Hide()
+		{
+			if (_views?.Count > 0)
+			{
+				_decoreView.RemoveView(_views[0]);
+				_views.Clear();
+			}
 		}
 	}
 }

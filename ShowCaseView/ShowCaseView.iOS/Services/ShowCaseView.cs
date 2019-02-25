@@ -148,6 +148,19 @@ namespace ShowCaseView.iOS.Services
 			materialShowcase.Alpha = .2f;
 			materialShowcase.containerView.AddSubview(materialShowcase);
 			materialShowcase.LayoutIfNeeded();
+			materialShowcase.AddGestureRecognizer(new UITapGestureRecognizer(() => Hide(materialShowcase)));
+		}
+
+		public static void Hide(this ShowCase showCase)
+		{
+			showCase.RecycleSubviews();
+			showCase.RemoveFromSuperview();
+		}
+
+		private static void RecycleSubviews(this ShowCase materialShowcase)
+		{
+			foreach (var subview in materialShowcase.Subviews)
+				subview.RemoveFromSuperview();
 		}
 	}
 }

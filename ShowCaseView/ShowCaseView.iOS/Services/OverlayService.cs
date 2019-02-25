@@ -2,7 +2,6 @@
 using ShowCaseView.iOS.Services;
 using ShowCaseView.IServices;
 using ShowCaseView.Model;
-using System.Threading.Tasks;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -12,22 +11,24 @@ namespace ShowCaseView.iOS.Services
 {
 	public class OverlayService : IOverlayService
 	{
+		ShowCase _showCase;
+
 		public OverlayService()
 		{
 			UIDevice.Notifications.ObserveOrientationDidChange(OrientationChanged);
 		}
 
-		private async void OrientationChanged(object sender, NSNotificationEventArgs e)
+		private void OrientationChanged(object sender, NSNotificationEventArgs e)
 		{
-			await Task.CompletedTask;
+			
 		}
 
 		public void AddOverlay(View onView, ShowCaseConfig config)
 		{
-			ShowCase showCase = new ShowCase();
-			showCase.SetTargetView(GetOrCreateRenderer(onView).NativeView);
-			showCase.InitConfig(config);
-			showCase.Show();
+			_showCase = new ShowCase();
+			_showCase.SetTargetView(GetOrCreateRenderer(onView).NativeView);
+			_showCase.InitConfig(config);
+			_showCase.Show();
 		}
 
 		public static IVisualElementRenderer GetOrCreateRenderer(VisualElement element)
@@ -39,6 +40,14 @@ namespace ShowCaseView.iOS.Services
 				Platform.SetRenderer(element, renderer);
 			}
 			return renderer;
+		}
+
+		public void Hide()
+		{
+			if (_showCase != null)
+				_showCase.Hide();
+
+			_showCase = null;
 		}
 	}
 }
