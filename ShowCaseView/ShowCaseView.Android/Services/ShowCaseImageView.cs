@@ -15,7 +15,7 @@ namespace ShowCaseView.Droid.Services
         private Paint mBackgroundPaint, mErasePaint, mCircleBorderPaint;
         private Color mBackgroundColor = Color.Transparent;
         private Color mFocusBorderColor = Color.Transparent;
-        private int mFocusBorderSize;
+        private int mFocusBorderSize, mAnimCounter = 20, mFocusAnimationMaxValue = 20, mStep, mFocusAnimationStep = 1;
         private Calculator mCalculator;
         private RectF rectF;
 		private Path mPath;
@@ -86,23 +86,26 @@ namespace ShowCaseView.Droid.Services
 		/// </summary>
 		/// <param name="canvas"></param>
 		public override void Draw(Canvas canvas)
-        {
-            base.Draw(canvas);
+		{
+			base.Draw(canvas);
 
-            if (mBitmap == null)
-            {
-                mBitmap = Bitmap.CreateBitmap(Width, Height, Bitmap.Config.Argb8888);
-                mBitmap.EraseColor(mBackgroundColor);
-            }
-            canvas.DrawBitmap(mBitmap, 0, 0, mBackgroundPaint);
-			DrawRectangle(canvas);
-			if (mFocusBorderSize > 0)
+			if (mBitmap == null)
 			{
-				mPath.Reset();
-				mPath.MoveTo((float)mCalculator.CircleCenterX, (float)mCalculator.CircleCenterY);
-				mPath.AddRect(rectF, Path.Direction.Cw);
-				canvas.DrawPath(mPath, mCircleBorderPaint);
+				mBitmap = Bitmap.CreateBitmap(Width, Height, Bitmap.Config.Argb8888);
+				mBitmap.EraseColor(mBackgroundColor);
 			}
+			canvas.DrawBitmap(mBitmap, 0, 0, mBackgroundPaint);
+			DrawRectangle(canvas);
+			if (mAnimCounter == mFocusAnimationMaxValue)
+			{
+				mStep = -1 * mFocusAnimationStep;
+			}
+			else if (mAnimCounter == 0)
+			{
+				mStep = mFocusAnimationStep;
+			}
+			mAnimCounter = mAnimCounter + mStep;
+			PostInvalidate();
 		}
 
         /// <summary>
@@ -111,12 +114,20 @@ namespace ShowCaseView.Droid.Services
         /// <param name="canvas"></param>
         private void DrawRectangle(Canvas canvas)
         {
-            float left = mCalculator.RoundRectLeft(1, 10);
-            float top = mCalculator.RoundRectTop(1, 10);
-            float right = mCalculator.RoundRectRight(1, 10);
-            float bottom = mCalculator.RoundRectBottom(1, 10);
+            float left = mCalculator.RoundRectLeft(mAnimCounter, 1);
+            float top = mCalculator.RoundRectTop(mAnimCounter, 1);
+            float right = mCalculator.RoundRectRight(mAnimCounter, 1);
+            float bottom = mCalculator.RoundRectBottom(mAnimCounter, 1);
             rectF.Set(left, top, right, bottom);
             canvas.DrawRect(rectF, mErasePaint);
-        }
+
+			if (mFocusBorderSize > 0)
+			{
+				mPath.Reset();
+				mPath.MoveTo((float)mCalculator.CircleCenterX, (float)mCalculator.CircleCenterY);
+				mPath.AddRect(rectF, Path.Direction.Cw);
+				canvas.DrawPath(mPath, mCircleBorderPaint);
+			}
+		}
     }
 }

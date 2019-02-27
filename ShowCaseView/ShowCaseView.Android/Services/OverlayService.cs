@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Android.App;
 using Android.Views;
+using Android.Views.Animations;
 using Android.Widget;
 using ShowcaseView.Utilities;
 using ShowCaseView.Droid.Services;
